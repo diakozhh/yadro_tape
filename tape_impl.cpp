@@ -1,11 +1,10 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <utility>
 
 #include "tape_impl.h"
-#include "config_parser.h"
-
-// TODO delays from config
+#include "config_parser.hpp"
 
 TapeImpl::TapeImpl(std::fstream& io_stream) 
     : position_(0)
@@ -14,47 +13,47 @@ TapeImpl::TapeImpl(std::fstream& io_stream)
     io_stream_.seekg(std::ios::beg);
 }
 
-
-// 
 void TapeImpl::moveLeft() {
     if(this->position_ == std::ios::beg)
         throw std::out_of_range("Out of tape's bound(on begin)");
 
     std::this_thread::sleep_for(Config::getInstanceConfig().getDelayMove());
-
-    --position_;// -= sizeof(int32_t);
+    --position_;
     io_stream_.seekp(position_*sizeof(int32_t), std::ios::beg);
 
 }
 
 void TapeImpl::moveRight() {
-    //if(io_stream_.tellg() == io_stream_.end)
-    //    throw std::out_of_range("Out of tape's bound(on end)");
     std::this_thread::sleep_for(Config::getInstanceConfig().getDelayMove());
-
-    ++position_;// += sizeof(int32_t);
+    ++position_;
     io_stream_.seekp(position_*sizeof(int32_t), std::ios::beg);
 }
 
-int TapeImpl::readElement() {
+int32_t TapeImpl::readElement() {
     std::this_thread::sleep_for(Config::getInstanceConfig().getDelayRead());
 
-    int return_elem;
-    std::cout << "Before read: tellg()=" << io_stream_.tellg() << ", tellp()=" << io_stream_.tellp() << "\n";
+    int32_t return_elem;
     io_stream_.seekg(position_*sizeof(int32_t), std::ios::beg);
     io_stream_.read((char*)&return_elem, sizeof(int32_t));
     io_stream_.seekg(position_*sizeof(int32_t), std::ios::beg);
-    std::cout << "after read'" << return_elem <<"': tellg()=" << io_stream_.tellg() << ", tellp()=" << io_stream_.tellp() << "\n";
 
     return return_elem;
 }
 
-void TapeImpl::writeElement(int elem) {
+void TapeImpl::writeElement(int32_t elem) {
     std::this_thread::sleep_for(Config::getInstanceConfig().getDelayWrite());
-    
-    std::cout << "Before write: tellg()=" << io_stream_.tellg() << ", tellp()=" << io_stream_.tellp() << "\n";
     io_stream_.seekp(position_*sizeof(int32_t), std::ios::beg);
     io_stream_.write((const char*)&elem, sizeof(int32_t));
     io_stream_.seekp(position_*sizeof(int32_t), std::ios::beg);
-    std::cout << "after write'" << elem <<"': tellg()=" << io_stream_.tellg() << ", tellp()=" << io_stream_.tellp() << "\n";
+}
+
+void TapeImpl::swap(TapeImpl& tmp){
+    std::swap(io_stream_, tmp.io_stream_);
+    std::swap(position_, tmp.position_);
+}
+
+void TapeImpl::rewind() {
+    std::this_thread::sleep_for(Config::getInstanceConfig().getDelayRewind());
+    io_stream_.seekg(0, std::ios::beg);
+    this->position_ = 0;
 }

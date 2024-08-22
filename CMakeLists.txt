@@ -13,4 +13,4 @@ include_directories(include ${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 set(CMAKE_CXX_FLAGS "-lboost_program_options")
 
-file(MAKE_DIRECTORY ${directory} "${CMAKE_CURRENT_BINARY_DIR}\\tmp")
+file(MAKE_DIRECTORY ${directory} "${CMAKE_CURRENT_SOURCE_DIR}\\tmp")

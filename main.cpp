@@ -4,7 +4,7 @@
 #include <boost/program_options.hpp>
 
 #include "tape_impl.h"
-#include "config_parser.h"
+#include "config_parser.hpp"
 #include "merge_sort.h"
 #include "utils.h"
 
@@ -66,42 +66,6 @@ int main(int argc, char** argv)
     	return 1;
     }
 
-//	{
-//		// check spaces
-//		std::ifstream input("test_tape");
-//		std::ofstream out("tmp_out", std::ios::binary);
-//		int cnt = 0;
-//		while (!input.eof()) {
-//			int32_t x;
-//			input >> x;
-//			out.write((const char*)&x, sizeof(x));
-//			cnt++;
-//		}
-//		out.close();
-//		
-//		//std::cout << cnt << std::endl;
-//	}
-	//std::fstream input("test_tape");
-	//utils::convertTextIntoBinary(input);
-	//utils::convertBinaryIntoText(input);
-//
-//
-//	{	std::ifstream input("tmp_out", std::ios::binary);
-//		std::ofstream out("tmp_out2");
-//
-//		int cnt = 0;
-//		int32_t x;
-//		while(input.read((char*)&x, sizeof(x))){
-//
-//			out << x << " ";
-//			cnt++;
-//		}
-//		//std::cout << cnt << std::endl;
-//		input.close();
-//		out.close();
-//	}
-
-
 	// input file stream
 	//std::ifstream input("test_tape");
 	std::string input_tmp_filename = "tmp_input_bin";
@@ -137,20 +101,7 @@ int main(int argc, char** argv)
 		utils::convertBinaryIntoText(tmp_out2_bin, tmp_out2);
 
 		std::ofstream final_out("final_out");
-		// std::cout << init_tape.readElement() << std::endl;
-		// init_tape.moveRight();
-		// std::cout << init_tape.readElement() << std::endl;
-		// init_tape.writeElement(666);
-		// init_tape.moveRight();
-		// std::cout << init_tape.readElement() << std::endl;
-		// init_tape.moveLeft();
-		// std::cout << init_tape.readElement() << std::endl;
-		// init_tape.moveLeft();
-		// std::cout << init_tape.readElement() << std::endl;
-		// init_tape.moveLeft();
-		// std::cout << "cur " << std::ios::end <<" " << init_tape.getPosition()<< std::endl;;
-		// std::cout << init_tape.readElement() << std::endl;
-		
+
 	}
 	
 	return 0;
