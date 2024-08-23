@@ -5,7 +5,7 @@
 #include <utility>
 
 namespace utils{
-    void convertTextIntoBinary(const std::string& input_filename, const std::string &tmp_filename) {
+    static void convertTextIntoBinary(const std::string& input_filename, const std::string &tmp_filename) {
         std::ifstream input(input_filename);
         if(!input.is_open()) {
 		    throw std::ifstream::failure("Cannot open file");
@@ -21,7 +21,7 @@ namespace utils{
 		out.close();
     }
 
-    void convertBinaryIntoText(const std::string& input_filename, const std::string &tmp_filename) {
+    static void convertBinaryIntoText(const std::string& input_filename, const std::string &tmp_filename) {
         std::ifstream input(input_filename, std::ios::binary);
 		std::ofstream out(tmp_filename);
 		int32_t x;
