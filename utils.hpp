@@ -1,3 +1,5 @@
+#pragma once 
+
 #include <fstream>
 #include <iostream>
 #include <utility>
@@ -31,5 +33,9 @@ namespace utils{
 		}
 		input.close();
 		out.close();
+    }
+    void createBinaryFile(const std::string& input_filename) {
+        std::ofstream out(input_filename);
+        out.close();
     }
 }

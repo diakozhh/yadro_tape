@@ -6,7 +6,7 @@
 #include "tape_impl.h"
 #include "config_parser.hpp"
 #include "merge_sort.h"
-#include "utils.h"
+#include "utils.hpp"
 
 int main(int argc, char** argv) 
 { 
@@ -74,10 +74,6 @@ int main(int argc, char** argv)
 	utils::convertTextIntoBinary(input_filename, input_tmp_filename);
 	std::fstream input_bin(input_tmp_filename, std::ios::in | std::ios::out | std::ios::binary);
 
-	//Temporary fstreams for merging
-	std::fstream tmp1("tmp1", std::ios::in | std::ios::out | std::ios::binary);
-	std::fstream tmp2("tmp2", std::ios::in | std::ios::out | std::ios::binary);
-
 	// Output fstream
 	std::string output_bin_filename = "tmp_output_bin", output_filename = "out";
 	std::fstream ouput(output_bin_filename, std::ios::in | std::ios::out | std::ios::binary);
@@ -85,13 +81,13 @@ int main(int argc, char** argv)
 	if(!input_bin.fail()){
 		TapeImpl init_tape(input_bin);
 		
-		TapeImpl tape_tmp1(tmp1);
-		TapeImpl tape_tmp2(tmp2);
+		//TapeImpl tape_tmp1(tmp1);
+		//TapeImpl tape_tmp2(tmp2);
 
 		TapeImpl out_tape(ouput);
 
 		MergeSort sort;
-		sort(init_tape, out_tape, tape_tmp1, tape_tmp2, 16);
+		sort(init_tape, out_tape, 16);
 		std::string tmp_out1 = "tmp_non_bin1";
 		std::string tmp_out2 = "tmp_non_bin2";
 		std::string tmp_out1_bin = "tmp1";

@@ -1,14 +1,22 @@
-#include "merge_sort.h"
+#include <algorithm>
+#include <iostream>
+#include <utility>
 #include <vector>
 
-void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, TapeImpl& tmpTape1, TapeImpl& tmpTape2, const size_t limit) {
-    std::vector<int32_t> buf;
-    
-    // create tmp tape
+#include "merge_sort.h"
 
+void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, const size_t limit) {
+
+    //Temporary fstreams for merging
+	std::fstream tmp1("tmp/tmp_bin_1", std::fstream::in | std::fstream::out  | std::fstream::trunc | std::fstream::binary);
+	std::fstream tmp2("tmp/tmp_bin_2", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+
+    TapeImpl tmpTape1(tmp1);
+    TapeImpl tmpTape2(tmp2);
+
+    std::vector<int32_t> buf;
     while(!in_tape.isEnd()) {
         buf.reserve(limit / sizeof(int32_t));
-        std::cout <<std::endl;
         for(size_t i = 0; i < (limit / sizeof(int32_t)) && !in_tape.isEnd(); i++){
             buf.push_back(in_tape.readElement());
             in_tape.moveRight();
