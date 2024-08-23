@@ -7,12 +7,10 @@
 
 void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, const size_t limit) {
 
-    //Temporary fstreams for merging
-	std::fstream tmp1("tmp/tmp_bin_1", std::fstream::in | std::fstream::out  | std::fstream::trunc | std::fstream::binary);
-	std::fstream tmp2("tmp/tmp_bin_2", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+    //Temporary fstream for merging
+	std::fstream tmp("tmp/tmp_bin", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
 
-    TapeImpl tmpTape1(tmp1);
-    TapeImpl tmpTape2(tmp2);
+    TapeImpl tmpTape2(tmp);
 
     std::vector<int32_t> buf;
     while(!in_tape.isEnd()) {
@@ -22,13 +20,8 @@ void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, const size_t l
             in_tape.moveRight();
         }
         std::sort(buf.begin(), buf.end());
-        merge(buf, tmpTape1, tmpTape2);
+        merge(buf, out_tape, tmpTape2);
         buf.clear();
-    }
-    swapTwoTapes(out_tape, tmpTape1);
-    while(!out_tape.isEnd()){
-        std::cout << out_tape.readElement() << " ";
-        out_tape.moveRight();
     }
 }
 

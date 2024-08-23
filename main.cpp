@@ -66,39 +66,24 @@ int main(int argc, char** argv)
     	return 1;
     }
 
-	// input file stream
-	//std::ifstream input("test_tape");
-	std::string input_tmp_filename = "tmp_input_bin";
-	std::string input_filename = "test_tape";
-
-	utils::convertTextIntoBinary(input_filename, input_tmp_filename);
-	std::fstream input_bin(input_tmp_filename, std::ios::in | std::ios::out | std::ios::binary);
+	// input fstream
+	std::string input_filename;
+	std::cin >> input_filename;
+	utils::convertTextIntoBinary(input_filename, "tmp/bin_input");
+	std::fstream input_bin("tmp/bin_input", std::ios::in | std::ios::out | std::ios::binary);
 
 	// Output fstream
-	std::string output_bin_filename = "tmp_output_bin", output_filename = "out";
-	std::fstream ouput(output_bin_filename, std::ios::in | std::ios::out | std::ios::binary);
+	std::string ouput_filename;
+	std::cin >> ouput_filename;
+	std::fstream ouput("tmp/bin_output", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+
+	MergeSort sort;
 
 	if(!input_bin.fail()){
 		TapeImpl init_tape(input_bin);
-		
-		//TapeImpl tape_tmp1(tmp1);
-		//TapeImpl tape_tmp2(tmp2);
-
 		TapeImpl out_tape(ouput);
-
-		MergeSort sort;
-		sort(init_tape, out_tape, 16);
-		std::string tmp_out1 = "tmp_non_bin1";
-		std::string tmp_out2 = "tmp_non_bin2";
-		std::string tmp_out1_bin = "tmp1";
-		std::string tmp_out2_bin = "tmp2";
-
-		utils::convertBinaryIntoText(tmp_out1_bin, tmp_out1);
-		utils::convertBinaryIntoText(tmp_out2_bin, tmp_out2);
-
-		std::ofstream final_out("final_out");
-
+		sort(init_tape, out_tape, memory_limit);
+		utils::convertBinaryIntoText("tmp/bin_output", ouput_filename);
 	}
-	
 	return 0;
 }
