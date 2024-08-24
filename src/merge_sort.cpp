@@ -6,24 +6,27 @@
 #include "merge_sort.h"
 
 void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, const size_t limit) {
-
     //Temporary fstream for merging
-	std::fstream tmp("tmp/tmp_bin", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+	std::fstream tmp1("tmp/tmp_bin1", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
 
-    TapeImpl tmpTape2(tmp);
-
+    TapeImpl tmpTape1(tmp1);
+    merge_count = 0;
     std::vector<int32_t> buf;
     while(!in_tape.isEnd()) {
         buf.reserve(limit / sizeof(int32_t));
+        merge_count++;
         for(size_t i = 0; i < (limit / sizeof(int32_t)) && !in_tape.isEnd(); i++){
             buf.push_back(in_tape.readElement());
             in_tape.moveRight();
         }
         std::sort(buf.begin(), buf.end());
-        merge(buf, out_tape, tmpTape2);
+        merge(buf, tmpTape1, out_tape);
         buf.clear();
     }
-    tmp.close();
+    if(merge_count % 2 == 0){
+        merge(buf, tmpTape1, out_tape);
+        swapTwoTapes(tmpTape1, out_tape);
+    }
 }
 
 void MergeSort::merge(std::vector<int32_t> &buf, TapeImpl& tmp1, TapeImpl& tmp2) {

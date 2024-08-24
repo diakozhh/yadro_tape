@@ -8,4 +8,6 @@ public:
 private:
     void merge(std::vector<int32_t> &buf, TapeImpl& tmp1, TapeImpl& tmp2);
     void swapTwoTapes(TapeImpl& t1, TapeImpl& t2);
+
+    int merge_count = 0;
 };
