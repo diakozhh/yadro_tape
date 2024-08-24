@@ -73,17 +73,17 @@ int main(int argc, char** argv)
 	std::fstream input_bin("tmp/bin_input", std::ios::in | std::ios::out | std::ios::binary);
 
 	// Output fstream
-	std::string ouput_filename;
-	std::cin >> ouput_filename;
-	std::fstream ouput("tmp/bin_output", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
+	std::string output_filename;
+	std::cin >> output_filename;
+	std::fstream output("tmp/bin_output", std::fstream::in | std::fstream::out | std::fstream::trunc | std::fstream::binary);
 
 	MergeSort sort;
 
 	if(!input_bin.fail()){
 		TapeImpl init_tape(input_bin);
-		TapeImpl out_tape(ouput);
+		TapeImpl out_tape(output);
 		sort(init_tape, out_tape, memory_limit);
-		utils::convertBinaryIntoText("tmp/bin_output", ouput_filename);
+		utils::convertBinaryIntoText("tmp/bin_output", output_filename);
 	}
 	return 0;
 }

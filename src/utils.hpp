@@ -11,7 +11,6 @@ namespace utils{
 		    throw std::ifstream::failure("Cannot open file");
         }
         std::ofstream out(tmp_filename, std::ios::binary);
-        int32_t x;
 		while (!input.eof()) {
             int32_t x;
             input >> x;

@@ -11,7 +11,7 @@ public:
     void moveRight() override;
     int32_t readElement() override;
     void writeElement(int32_t elem) override;
-    inline int getPosition() override {
+    inline size_t getPosition() override {
         return this->position_;
     }
     
@@ -27,6 +27,6 @@ public:
         io_stream_.close();
     }
 private:
-    int position_;
+    size_t position_;
     std::fstream& io_stream_;
 };

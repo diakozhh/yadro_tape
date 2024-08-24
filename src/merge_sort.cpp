@@ -23,6 +23,7 @@ void MergeSort::operator()(TapeImpl& in_tape, TapeImpl& out_tape, const size_t l
         merge(buf, out_tape, tmpTape2);
         buf.clear();
     }
+    tmp.close();
 }
 
 void MergeSort::merge(std::vector<int32_t> &buf, TapeImpl& tmp1, TapeImpl& tmp2) {

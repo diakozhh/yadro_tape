@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(yadro_tape)
+project(yadro_practice)
 
 set(CMAKE_CXX_STANDARD 17)
-
-file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=leak,address -Wall -Wextra -Werror -Wpedantic")
+set( SOURCES 
+    src/config_parser.hpp
+    src/merge_sort.cpp
+    src/merge_sort.h
+    src/tape_impl.cpp
+    src/tape_impl.h
+    src/tape.h
+    src/utils.hpp
+)
 
 find_package(Boost COMPONENTS program_options REQUIRED)
 include_directories( ${Boost_INCLUDE_DIRS})
@@ -16,21 +24,21 @@ file(MAKE_DIRECTORY ${directory} "${CMAKE_CURRENT_SOURCE_DIR}\\tmp")
 
 add_executable(yadro_tape 
     ${SOURCES}
+    src/main.cpp
 )
 
 target_include_directories(yadro_tape PUBLIC
-   "${CMAKE_CURRENT_SOURCE_DIR}/src"
+   ${CMAKE_CURRENT_SOURCE_DIR}/src
    ${Boost_INCLUDE_DIRS}
 )
 
 target_link_libraries(yadro_tape ${Boost_LIBRARIES})
 
 #enable_testing()
-
 add_executable(tape_tests
     tests/test.cpp
     tests/main.cpp
-#    ${SOURCES}
+    ${SOURCES}
 )
 
 target_include_directories(
@@ -39,5 +47,6 @@ target_include_directories(
     ${Boost_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-target_link_libraries(tape_tests ${GTEST_LIBRARIES})
+target_link_libraries(tape_tests ${GTEST_LIBRARIES} ${Boost_LIBRARIES})
