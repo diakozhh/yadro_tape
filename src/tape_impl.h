@@ -18,7 +18,11 @@ public:
     inline bool isEnd() override {
         return io_stream_.peek() == EOF;
     }
-
+    /**
+     * @brief Simulate physical repositioning of tapes
+     * 
+     * @param tmp replacement tape
+     */
     void swap(TapeImpl& tmp);
     
     void rewind() override;

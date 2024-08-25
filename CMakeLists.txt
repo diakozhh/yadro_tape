@@ -20,7 +20,7 @@ include_directories( ${Boost_INCLUDE_DIRS})
 find_package(GTest REQUIRED)
 include_directories(${GTest_INCLUDE_DIRS})
 
-file(MAKE_DIRECTORY ${directory} "${CMAKE_CURRENT_SOURCE_DIR}\\tmp")
+file(MAKE_DIRECTORY ${directory} ${CMAKE_CURRENT_SOURCE_DIR}/tmp)
 
 add_executable(yadro_tape 
     ${SOURCES}
@@ -40,6 +40,7 @@ add_executable(tape_tests
     tests/main.cpp
     ${SOURCES}
 )
+file(MAKE_DIRECTORY ${directory} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_data_tmp)
 
 target_include_directories(
     tape_tests PUBLIC

@@ -5,6 +5,12 @@
 #include <utility>
 
 namespace utils{
+    /**
+     * @brief The function of converting a text file to binary file
+     * 
+     * @param input_filename Text file name
+     * @param tmp_filename Binary file name after converting
+     */
     static void convertTextIntoBinary(const std::string& input_filename, const std::string &tmp_filename) {
         std::ifstream input(input_filename);
         if(!input.is_open()) {
@@ -19,7 +25,12 @@ namespace utils{
         input.close();
 		out.close();
     }
-
+    /**
+     * @brief The function of converting a binary file to text file
+     * 
+     * @param input_filename Binary file name
+     * @param tmp_filename Text file name after converting
+     */
     static void convertBinaryIntoText(const std::string& input_filename, const std::string &tmp_filename) {
         std::ifstream input(input_filename, std::ios::binary);
 		std::ofstream out(tmp_filename);
